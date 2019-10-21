@@ -47,7 +47,7 @@ func personFunc(w http.ResponseWriter, r *http.Request) {
 		var temp Person
 		err := decoder.Decode(&temp)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, "/person: POST body cannot be empty", http.StatusInternalServerError)
 			return
 		}
 		personMap[temp.Name] = &temp
@@ -60,10 +60,18 @@ func searchFunc(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		name := r.URL.Path[8:]
-		// ERROR IF NAME IS NOT FOUND
-		retrieved, _ := personMap[name]
-		marshalled, _ := json.Marshal(*retrieved)
-		fmt.Fprintf(w, string(marshalled))
+		retrieved, exist := personMap[name]
+		if exist == true {
+			marshalled, err := json.Marshal(*retrieved)
+			if err != nil {
+				http.Error(w, "/person/: Error marshalling", http.StatusInternalServerError)
+				return
+			}
+			fmt.Fprintf(w, string(marshalled))
+		} else {
+			http.Error(w, "/person/: Person does not exist", http.StatusInternalServerError)
+			return
+		}
 	case "POST":
 		fmt.Println("POST")
 	default:
