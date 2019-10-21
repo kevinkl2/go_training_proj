@@ -1,0 +1,6 @@
+Using the previous code bits shown, develop an HTTP server that will:
+
+- Consume Person structs via a POST request to /people
+- Save the data in a map
+- Retrieve and return the marshaled json for the appropriate person when firing a GET request against /people/{name}
+- Write the data out to a file and return the marshaled json for all people with a GET request to /people

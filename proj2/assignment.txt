@@ -1,0 +1,27 @@
+Using knowledge of Go – specifically channels, goroutines, and networking – construct an HTTP server that will: 
+Requirements:
+- Communicate on port 12345
+- In the background, retrieve the current Unix time based on your IP from worldtimeapi.org every E seconds where E is Euler's Constant from the math library.
+- Return the last fetched time and start time as an int64 and the uint32 amount of requests that have been made to retrieve the time using a GET request to the root.
+- Each time someone makes a request, use a channel to send the request IP and last fetched time as well as the request time to another go routine which will log this data to a newline delimited file named `logs` in the following format: <request-ip>-<current-time>-<request-time>
+Constraints:
+- Use string formatting to create the log output, not concatenation.
+- Do NOT fetch the time during the request, this value should already be there.
+
+{
+    "week_number": 42,
+    "utc_offset": "-07:00",
+    "utc_datetime": "2019-10-20T01:26:54.955481+00:00",
+    "unixtime": 1571534814,
+    "timezone": "America/Los_Angeles",
+    "raw_offset": -28800,
+    "dst_until": "2019-11-03T09:00:00+00:00",
+    "dst_offset": 3600,
+    "dst_from": "2019-03-10T10:00:00+00:00",
+    "dst": true,
+    "day_of_year": 292,
+    "day_of_week": 6,
+    "datetime": "2019-10-19T18:26:54.955481-07:00",
+    "client_ip": "70.187.234.242",
+    "abbreviation": "PDT"
+}
